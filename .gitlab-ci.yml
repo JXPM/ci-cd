@@ -59,3 +59,13 @@ e2e-test:
     - echo "Hello E2E !"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+
+only-canary:
+  stage: validate
+  script:
+    - echo "Hello Only Canary !"
+  rules:
+    - if: '$ENV_TARGET == "canary"'
+      when: on_success
+    - when: never
