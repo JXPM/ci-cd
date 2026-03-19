@@ -12,5 +12,5 @@ git push --set-upstream origin main
 #fichier Maj et push
 git status
 git add .
-git commit -m "modification de l'API"
+git commit -m "maj"
 git push origin main
