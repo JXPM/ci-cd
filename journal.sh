@@ -14,3 +14,6 @@ git status
 git add .
 git commit -m "maj"
 git push origin main
+
+#COMMANDE POUR NE PAS MET MDP POUR PUSH
+git config --global credential.helper store

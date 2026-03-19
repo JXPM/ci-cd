@@ -1,5 +1,10 @@
 # .gitlab-ci.yml file
-
+workflow:
+  rules:
+    - if: '$CI_COMMIT_TITLE =~ /^chore: release/'
+      when: never
+    - when: always
+    
 image: node:latest
 cache:
   key:
