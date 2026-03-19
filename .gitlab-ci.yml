@@ -4,7 +4,7 @@ workflow:
     - if: '$CI_COMMIT_TITLE =~ /^chore: release/'
       when: never
     - when: always
-    
+
 image: node:latest
 cache:
   key:
@@ -52,3 +52,10 @@ release:
     - git pull origin $CI_COMMIT_BRANCH --rebase
   script:
     - npx --yes release-it --ci
+
+e2e-test:
+  stage: test
+  script:
+    - echo "Hello E2E !"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

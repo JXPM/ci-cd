@@ -17,3 +17,6 @@ git push origin main
 
 #COMMANDE POUR NE PAS MET MDP POUR PUSH
 git config --global credential.helper store
+
+#COMMANDE POUR REBASE
+git pull origin main --rebase
