@@ -2,7 +2,7 @@
 FROM node:lts-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev --prefer-offline
+RUN npm ci --omit=dev --prefer-offline --ignore-scripts
 
 # Étape 2 : image runtime minimaliste
 FROM node:lts-alpine AS runtime
