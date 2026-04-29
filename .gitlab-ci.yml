@@ -35,7 +35,14 @@ unit-test:
   stage: test
   script:
     - npm test
- 
+
+integration-test:
+  stage: test
+  needs:
+    - unit-test
+  script:
+    - echo "Hello Integration !"
+
 release:
   stage: release
   when: manual
@@ -55,6 +62,8 @@ release:
 
 e2e-test:
   stage: test
+  needs:
+    - integration-test
   script:
     - echo "Hello E2E !"
   rules:
