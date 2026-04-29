@@ -24,7 +24,7 @@
   },
   "release-it": {
     "$schema": "https://unpkg.com/release-it/schema/release-it.json",
-    "gitlab": {
+    "github": {
       "release": true
     },
     "git": {

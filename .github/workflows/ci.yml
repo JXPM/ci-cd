@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      env_target:
+        description: 'Cible environnement (ex: canary)'
+        required: false
+        default: ''
+
+jobs:
+  # === Stage : validate ===
+  lint:
+    if: ${{ github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'chore: release') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: npm run lint
+
+  only-canary:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.env_target == 'canary' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Hello Only Canary !"
+
+  # === Stage : test (chaîne de dépendances exo 4) ===
+  unit-test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: npm test
+
+  integration-test:
+    needs: unit-test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello Integration !"
+
+  e2e-test:
+    needs: integration-test
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello E2E !"
+
+  # === Stage : release (déclenchement manuel via workflow_dispatch) ===
+  release:
+    needs: [unit-test, integration-test]
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ./.github/actions/setup
+      - name: Configure git
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+      - run: npx --yes release-it --ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
