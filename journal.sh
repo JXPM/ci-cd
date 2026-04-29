@@ -7,6 +7,14 @@ gh repo create ci-cd --public
 git remote add origin https://gitlab.com/JXPM/ci-cd.git
 git push --set-upstream origin main
 
+# Créer un nouveau dépôt Github
+git init
+git branch -M main
+git add .
+git commit -m "first commit"
+gh repo create ci-cd --public
+git remote add origin https://github.com/JXPM/ci-cd.git
+git push --set-upstream origin main
 
 
 #fichier Maj et push
