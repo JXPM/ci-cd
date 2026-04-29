@@ -1,0 +1,13 @@
+node_modules
+.git
+.github
+.gitlab-ci.yml
+.claude
+.husky
+journal.sh
+*.log
+.npm
+dist
+coverage
+README.md
+eslint.config.mjs
