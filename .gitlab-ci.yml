@@ -31,13 +31,16 @@ lint:
   script:
     - npm run lint
  
-unit-test:
+.test-template:
   stage: test
+
+unit-test:
+  extends: .test-template
   script:
     - npm test
 
 integration-test:
-  stage: test
+  extends: .test-template
   needs:
     - unit-test
   script:
@@ -61,7 +64,7 @@ release:
     - npx --yes release-it --ci
 
 e2e-test:
-  stage: test
+  extends: .test-template
   needs:
     - integration-test
   script:
