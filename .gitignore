@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# GitLab CI (on est passés sur GitHub Actions)
+.gitlab-ci.yml
+
+# Config Claude Code locale
+.claude/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
